@@ -1,5 +1,5 @@
 </content>
-    <footer class="mt-auto align-items-center">
+    <footer class="mt-auto align-items-center fixed-bottom">
             <p class="text-center text-muted">Universidad Distrital Francisco José de Caldas © 2022</p>
     </footer>
     <script>const base_url = "<?= baseUrl(); ?>"</script>

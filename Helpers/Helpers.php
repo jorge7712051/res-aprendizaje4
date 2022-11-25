@@ -27,6 +27,11 @@
         require_once($viewHeader);
     }
 
+    function pageHeaderQuiz($data=""){
+        $viewHeader = "Views/Template/HeaderQuiz.php";
+        require_once($viewHeader);
+    }
+
     function footer($data=""){
         $viewFooter = "Views/Template/Footer.php";
         require_once($viewFooter);

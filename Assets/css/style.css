@@ -14,6 +14,16 @@
     height: 100%;
 }
 
+.img-quiz{
+    width: 50% !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#formLoginQuiz{
+    background: #E0DFE1;
+}
+
 #contentLearningResults{
     position: relative;
     margin-top: 2%;

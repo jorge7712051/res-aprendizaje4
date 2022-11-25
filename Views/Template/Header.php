@@ -35,6 +35,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?= baseUrl();?>Login">Ingresar</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= baseUrl();?>LoginQuiz">Encuesta Egresados</a>
+                    </li>
                 </ul>
             </div>
         </div>
