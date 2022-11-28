@@ -9,6 +9,7 @@
       </div>
       <div class="card-body row justify-content-center" id="card-body-page">
         <form class="col l12 formQuiz purple lighten-5 formQuiz "   style="width:100%;">
+      
           <?= $data['form']; ?>
 
           <button type="submit" id="btnRegister" class="btn btn-block gradient-custom-2 mb-3">Guardar Respuestas</button>

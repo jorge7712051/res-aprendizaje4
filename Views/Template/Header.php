@@ -30,13 +30,14 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="<?= baseUrl();?>Statistics">Tratamiento estadístico</a></li>
                             <li><a class="dropdown-item" href="<?= baseUrl();?>SurveyStats/SurveyStats/1">Encuesta a estudiantes</a></li>
+                            <li><a class="dropdown-item" href="<?= baseUrl();?>QuizStast/StatsQuiz">Encuesta Egresados</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= baseUrl();?>Login">Ingresar</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= baseUrl();?>LoginQuiz">Encuesta Egresados</a>
+                        <a class="nav-link" href="<?= baseUrl();?>LoginQuiz">Ingreso Encuesta Egresados</a>
                     </li>
                 </ul>
             </div>

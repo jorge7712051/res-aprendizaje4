@@ -56,6 +56,13 @@
                                     <button class="dropdown-item" id="menuBtns" class="btn btn-link" aria-current="page" type="submit">Creación de preguntas de encuestas</button>
                                 </form>
                             </li>
+                            <li>
+                                <form name="EALR" id="EALR" action="<?= baseUrl() ?>ManagementQuestion/viewAnswer" method="post">
+                                    <input type="hidden" id="txtUser" name="txtUser" class="form-control" value="<?= $data['user'] ?>" />
+                                    <input type="hidden" id="txtPassword" name="txtPassword" class="form-control" value="<?= $data['pass'] ?>" />
+                                    <button class="dropdown-item" id="menuBtns" class="btn btn-link" aria-current="page" type="submit">Respuestas Encuesta</button>
+                                </form>
+                            </li>
 
                         </ul>
                     </li>

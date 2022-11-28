@@ -35,7 +35,8 @@
                     $_SESSION['validate']= true;
                     $_SESSION["userName"]= $request['userName'];
                     $_SESSION["userPassword"]= "";
-                    $_SESSION["userEmail"] = "";
+                    $_SESSION["userEmail"] = $request['userEmail'];
+                    $_SESSION["displayName"]=$_SESSION["userName"];
                     $_SESSION["photo"]= media()."/images/uploads/user.png";
                     return true;
                 } else {

@@ -13,7 +13,13 @@ class ResolveQuizModel extends Mysql
         inner join quiz q on q.id=qu.idQuiz  WHERE q.active= true and qu.active = true ";
         
         $request = $this->selectAll($sql);
-        $_SESSION['id_quiz']=$request[0]['id_quiz'];
+        if(count($request)>0){
+            $_SESSION['id_quiz']=$request[0]['id_quiz'];
+        }
+        else{
+            $_SESSION['id_quiz']=0;
+        }
+        
         return $request;
         
     }

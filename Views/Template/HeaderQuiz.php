@@ -27,7 +27,7 @@
                    
                     </li>
                     <li class="nav-item" >
-                        <a id="menuBtns" class="nav-link" href=""> <img src="<?= $_SESSION['photo']; ?>"  style="height: 40px;" class="rounded-circle"> <?=  $_SESSION["userName"] ." ". $_SESSION["userEmail"] ?></a>
+                        <a id="menuBtns" class="nav-link" href=""> <img src="<?= $_SESSION['photo']; ?>"  style="height: 40px;" class="rounded-circle"> <?=   $_SESSION["displayName"] ?></a>
                     </li>
                   
                     <li class="nav-item">

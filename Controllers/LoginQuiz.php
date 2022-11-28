@@ -120,6 +120,7 @@ class LoginQuiz extends Controllers
                 $_SESSION["userName"] = $google_account_info->name;
                 $_SESSION["userEmail"] = "(" . $_SESSION['email'] . ")";
                 $_SESSION["userPassword"] = '';
+                $_SESSION["displayName"]= $_SESSION["userName"] ." ".   $_SESSION["userEmail"] ;
             }
 
             if (!isset($_SESSION['photo'])) {
@@ -148,6 +149,7 @@ class LoginQuiz extends Controllers
                 $_SESSION["userName"] = $userInfo['name'];
                 $_SESSION["userEmail"] = "(" . $userInfo['email'] . ")";
                 $_SESSION["userPassword"] = '';
+                $_SESSION["displayName"]= $_SESSION["userName"] ." ".  $_SESSION["userEmail"] ;
             }
 
             if (!isset($_SESSION['photo'])) {
