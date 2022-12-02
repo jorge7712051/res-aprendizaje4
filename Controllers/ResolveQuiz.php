@@ -94,6 +94,46 @@ class ResolveQuiz extends Controllers
         }
     }
 
+    public function ChangePasword()
+    {
+        $UserQuiz = new UserQuizModel();
+
+        if (isset($_POST["data"])) {
+            $data = base64_decode($_POST["data"]);
+            $data = explode("&",$data);
+            $token = $_POST['token'];
+            $action = $_POST['action'];
+            // validacion captcha
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('secret' => RECAPTCHA_V3_SECRET_KEY, 'response' => $token)));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            $arrResponse = json_decode($response, true);
+
+            if ($arrResponse["success"] == '1' && $arrResponse["action"] == $action && $arrResponse["score"] >= 0.5) {
+
+                $password = password_hash($_POST["newpassword"], PASSWORD_DEFAULT);
+                $result = $UserQuiz->updatePassword($password, $data[0]);
+
+                echo "<script> alert('Actualizacion realizada');
+                window.location= '" . baseUrl() . "LoginQuiz'
+                </script>";
+                
+            } else {
+                echo "<script> alert('Error en el captcha');
+                window.location= '" . baseUrl() . "LoginQuiz'
+                </script>";
+            }
+        } else {
+            echo "<script> alert('Acceso denegado');
+                window.location= '" . baseUrl() . "LoginQuiz'
+                </script>";
+        }
+    }
+
 
 
     public function createUser()
@@ -128,7 +168,31 @@ class ResolveQuiz extends Controllers
 
         $this->sendMail($respuesta['userEmail']);
 
-        $arrResponse = array('status' => true, 'msg' => 'Usuario creado. Se ha enviado un correo electronico para que se confirme la cuenta');
+        $arrResponse = array('status' => true, 'msg' => 'Usuario creado. Se ha enviado un correo electronico para que se confirme la cuenta', 'title' => 'Usuario Creado');
+        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function resetPassword()
+    {
+        $UserQuiz = new UserQuizModel();
+        if ($_POST["resetEmail"] == "") {
+
+            $arrResponse = array('status' => false, 'msg' => 'Existen campos sin llenar');
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            return;
+        }
+
+
+        $userEmail = strClean($_POST["resetEmail"]);
+        $respuesta = $UserQuiz->searchQuizByEmail($userEmail);
+        if (is_array($respuesta)) {
+            if (count($respuesta) > 0) {
+                $this->sendMailResetPassword($respuesta);
+            }
+        }
+
+
+        $arrResponse = array('status' => true, 'msg' => 'Se ha enviado un correo con las instrucciones para recuperar su clave de acceso', 'title' => 'Recuperacion de Contraseña');
         echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
     }
 
@@ -137,13 +201,22 @@ class ResolveQuiz extends Controllers
 
         if (isset($_GET["token"])) {
             $UserQuiz = new UserQuizModel();
-            $UserQuiz->updateUser(strClean($_GET["token"]));
-            $data['page_tag'] = "Responder encuesta";
-            $data['page_title'] = "Responder encuesta";
-            $data['page_functions_js'] = "functions_assign_quiz.js";
-            $this->views->getView($this, "ActiveUser", $data);
+            $response = $UserQuiz->updateUser(strClean($_GET["token"]));
+            if ($response) {
+                $data['page_tag'] = "Responder encuesta";
+                $data['page_title'] = "Responder encuesta";
+                $data['page_functions_js'] = "functions_assign_quiz.js";
+                $this->views->getView($this, "ActiveUser", $data);
+            } else {
+                echo "<script> window.location= '" . baseUrl() . "LoginQuiz'
+            </script>";
+            }
+        } else {
+            echo "<script> window.location= '" . baseUrl() . "LoginQuiz'
+            </script>";
         }
     }
+
 
     function sendMail($destination)
     {
@@ -151,28 +224,70 @@ class ResolveQuiz extends Controllers
         $mail = new PHPMailer(true);
 
         try {
-            //Server settings
-            //Enable verbose debug output
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'jorge7712051@gmail.com';                     //SMTP username
-            $mail->Password   = 'xymdrxmsoruyznsv';                               //SMTP password
-            //Enable implicit TLS encryption
-            $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+           
+            $mail->isSMTP();                                            
+            $mail->Host       = SMTP_SERVER;              
+            $mail->SMTPAuth   = true;                
+            $mail->Username   = USER_MAIL;                  
+            $mail->Password   = USER_TOKEN;             
+            $mail->Port       = PORT;               
 
             //Recipients
             $mail->setFrom('jlcorream@correo.udistrital.edu.co', 'Universidad Distrital Francisco Jose de Caldas');
-            $mail->addAddress($destination, 'Joe User');     //Add a recipient
+            $mail->addAddress($destination, 'Universidad Distrital Francisco Jose de Caldas');     
+
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = 'Activacion usuario plataforma encuestas';
+            $mail->Body    = '<p>Por favor confirme y active su usuario a travez del siguiente boton </p></br>
+            <a style="border: 1px solid lightgray;
+            text-decoration: none;
+            padding: 10px;
+            color: black;
+            background: linear-gradient(to right, rgba(255,255,255,1) 2%, rgba(255,218,106,1) 35%, rgba(253,122,67,1) 100%);" 
+            href="' . baseUrl() . "ResolveQuiz/ActiveUser?token=" . $id . '" > Activar Usuario</a>
+            <p></p>';
+
+
+            $mail->send();
+            //echo 'Message has been sent';
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+    }
+
+    function sendMailResetPassword($destination)
+    {
+        $date = date('d-m-y h:i:s');
+        $id = base64_encode($destination['id'] . "&" . $destination['userEmail'] . "&" . $date);
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();                                            
+            $mail->Host       = SMTP_SERVER;              
+            $mail->SMTPAuth   = true;                
+            $mail->Username   = USER_MAIL;                  
+            $mail->Password   = USER_TOKEN;             
+            $mail->Port       = PORT;               
+
+            //Recipients
+            $mail->setFrom('jlcorream@correo.udistrital.edu.co', 'Universidad Distrital Francisco Jose de Caldas');
+            $mail->addAddress($destination['userEmail'], 'Universidad Distrital Francisco Jose de Caldas');     //Add a recipient
 
 
 
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Activacion usuario plataforma encuestas';
-            $mail->Body    = '<p>Por favor confirme su usuario siguiendo el siguiente enlace 
-            <a href="' . baseUrl() . "ResolveQuiz/ActiveUser?token=" . $id . '" > Activar Usuario</a></p>';
+            $mail->Subject = 'Solicitud recuperacion de clave de ingreso';
+            $mail->Body    = '<p>Para restablecer su contraseña por favor ingrese en el siguiente enlace, el cual sera valido solo por 2 horas. </p></br>
+            <a style="border: 1px solid lightgray;
+            text-decoration: none;
+            padding: 10px;
+            color: black;
+            background: linear-gradient(to right, rgba(255,255,255,1) 2%, rgba(255,218,106,1) 35%, rgba(253,122,67,1) 100%);" 
+            href="' . baseUrl() . "LoginQuiz/NewPassword?token=" . $id . '" >Recuperacion de clave</a>
+            <p></p>';
 
 
             $mail->send();
@@ -334,7 +449,8 @@ class ResolveQuiz extends Controllers
         return $html;
     }
 
-    function saveQuiz(){
+    function saveQuiz()
+    {
 
         if (isset($_SESSION['access_token'])) {
 
@@ -342,9 +458,6 @@ class ResolveQuiz extends Controllers
                 $this->model->save($_POST["response"]);
                 echo true;
             }
-
         }
-
-        
     }
 }

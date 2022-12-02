@@ -132,53 +132,9 @@ function postPutExecution(url, dataFormALR, modalName, formModal){
         }
 }
 
-function deleteExecution(url){
-    let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    let ajaxUrl = base_url+url;
-    request.open('POST', ajaxUrl, true);
-        request.send();
-        request.onreadystatechange = function(){
-            if(request.readyState == 4 && request.status == 200){
-                let objData = JSON.parse(request.responseText);
-                if(objData.status){
-                    swal("¡Eliminado!", objData.msg, "success");
-                    assignLearningResultTable.ajax.reload();
-                } else {
-                    swal("Cancelado", objData.msg, "error");
-                }
-            }
-        }
-}
-
-function deleteAssignLearningResult(deleteButton){
-    let code = deleteButton.getAttribute('alr');
-    swal({
-        title: "Eliminar asignación de resultado de aprendizaje",
-        text: "¿Realmente quiere eliminar la asignación?",
-        icon: "warning",
-        buttons: {
-            cancel: "¡No, cancelar!",
-            confirm: "¡Si, eliminar!",
-          },
-        closeOnconfirm: false
-    }).then(result => {
-        if(result){
-            deleteExecution('EditAssignLearningResult/deleteAssignLearningResult/'+ code);
-        } else {
-            swal("Cancelado", "El resultado de aprendizaje esta ha salvo", "error");
-        }
-        
-    });
-}
 
 
 
-function searchSelect(selector){
-    let selectBoxElement = document.querySelector(selector);
-    dselect(selectBoxElement, {
-        search: true
-    });
-}
 
 function noBack(){
     history.go(1);

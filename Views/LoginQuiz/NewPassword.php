@@ -18,8 +18,7 @@
 </head>
 
 <body>
-<?php getModal('RegisterModal', $data);?>
-<?php getModal('ResetPasswordModal', $data);?>
+
     <section class="h-100 gradient-form" style="background-color: #eee;">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -28,42 +27,25 @@
                         <div class="row g-0">
                             <div class="col-lg-6 col-sm-12">
                                 <div class="card-body p-md-5 mx-md-4">
-
-                                    <div class="text-center mb-4">
-                                        <img src="<?= media(); ?>/images/uploads/logo_ud_sin_texto.png" style="width: 50px;" alt="logo">                                      
-                                    </div>
-
-                                    <div class="col l12 s12 bg-primary rounded">
-                                        <a href="<?= $data['url_facebook']; ?>" class="waves-effect text-light btn" style="width:100%;">
-                                            <i class="fa-brands fa-square-facebook"></i> Iniciar sesión con Facebbok</a>
-                                    </div>
-                                    <div class="col l12 s12 mt-2 mb-4  rounded" style="border: 1px solid gray">                                     
-                                    <a href="<?= $data['url_google']; ?>" class="waves-effect grey lighten-5 btn" style="width:100%; color:black">
-                                            <i class="material-icons prefix fa-brands fa-google" style="color: #bdbdbd  ;"></i> Iniciar sesión con Google</a>
-                                    </div>
-
-                                    <form name="formLoginQuiz" class="p-2 shadow" id="formLoginQuiz" action="<?= baseUrl() ?>ResolveQuiz/ResolveQuiz" method="post">
+                                    <form name="formResetPass" class="p-2 shadow" id="formResetPass" action="<?= baseUrl() ?>ResolveQuiz/ChangePasword" method="post">
                                     <br>
                                         <div class="form-outline">
                                             
-                                            <input type="email" id="email" name="email" class="form-control" placeholder="Correo Electronico" autocomplete="off" required/>
+                                            <input type="password" id="newpassword" name="newpassword" class="form-control" placeholder="Nueva contraseña" autocomplete="off" required/>
                                             <br>
                                         </div>
 
                                         <div class="form-outline">
-                                            <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required/>
+                                            <input type="password" id="repetpassword" name="repetpassword" class="form-control" placeholder="Confirmacion de contraseña" required/>
                                             <br>
                                         </div>
 
                                         <div class="text-center pt-1  pb-1">
-                                            <button class="btn btn-block gradient-custom-2 mb-3" type="submit" id="ButtonLogin">Ingresar</button>
-                                            <a class="text-muted" onclick="addResetModal()" style="cursor:pointer;">¿Olvidaste tu contraseña?</a> | No tienes cuenta <a href="#" onclick="addQuizModal()"> Registrate</a>
+                                            <button class="btn btn-block gradient-custom-2 mb-3" type="submit" id="ButtonLogin">Cambiar Contraseña</button>
+                                           
                                         </div>
                                     </form>
-                                    <script>
-   
-  </script>
-   
+                                  
                                 </div>
                             
                             </div>

@@ -26,14 +26,9 @@ class ManagementQuestion extends Controllers
     {
         if (isset($_SESSION['user'])) {
             $resultado = $this->model->getAnswer();
-          
-           
-           
-            $filename = "libros.xls";
+        
             $filename = "answers_".date('Ymd') . ".xls";	
           
-            //header("Content-Type: application/vnd.ms-excel; charset='ISO 8859-1' ");
-            //header('Content-Encoding: UTF-8');
             header( "Content-type: application/vnd.ms-excel; charset=utf-8" );
             header('Content-Transfer-Encoding: binary');
             header("Content-Disposition: attachment; filename=\"$filename\"");

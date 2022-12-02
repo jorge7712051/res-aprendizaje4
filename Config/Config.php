@@ -15,14 +15,25 @@
     const DB_USER_QUIZ = "jorgeadmin";
     const DB_PASS_QUIZ = "JORGEleonardo7*";
 
+    // IDENTIFICADOR FACEBOOK
+
     const ID_FACEBOOK = '663641485359904';
     const SECRET_FACEBOOK = '6bfe16744a5031e624d705640d131250'; 
     const GRAPH_VERSION = 'v2.4';
 
+     // IDENTIFICADOR GOOGLE
     const ID_GOOGLE = '1000972217554-3fe7ck4uc0spr20dmldbh01t7q182vk9.apps.googleusercontent.com';
     const SECRET_GOOGLE = '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'; 
     const REDIRECT_URI = 'http://localhost/res-aprendizaje4/ResolveQuiz/ResolveQuiz';
 
+    // KEY PASSWORD
     const RECAPTCHA_V3_SECRET_KEY = "6LfITyAjAAAAAPzMGtstVENYnb4sJKt_W5Lz9CXa";
    
+    // MAIL
+
+    const SMTP_SERVER = "smtp.gmail.com";
+    const USER_MAIL = "jorge7712051@gmail.com";
+    const USER_TOKEN = "xymdrxmsoruyznsv";
+    const PORT = 587;
+
 ?>

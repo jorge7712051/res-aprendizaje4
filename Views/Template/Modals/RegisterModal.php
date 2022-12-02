@@ -18,11 +18,11 @@
                 <div class="mb-3">
                         <label class="form-check-label" for="userPassword2">Confirmar Password</label>
                         <input type="password" id="userPassword2" name="userPassword2" class="form-control" required>
-</div>
+                </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="btnRegister" class="btn btn-success">Guardar</button>
+                        <button type="submit" id="btnRegister" class="btn btn-success">Registrarse</button>
                     </div>
                 </form>
             </div>

@@ -164,8 +164,32 @@ class LoginQuiz extends Controllers
             }
         }
 
-        //$user = new User;
-        //$user->createUser($userObj);
-
+    
     }
+
+    function NewPassword()
+    {
+
+        if (isset($_GET["token"])) {
+            $token=base64_decode($_GET["token"]);
+            $data = explode("&",$token);
+            $time1 = DateTime::createFromFormat('d-m-y H:i:s', $data[2]);
+            $date = date('d-m-y H:i:s');
+            $time2 = DateTime::createFromFormat('d-m-y H:i:s', $date);
+            $interval = $time1->diff($time2);
+            if($interval->format('%H') <= 2){
+                $data['page_tag'] = "Recuperacion Contraseña";
+                $data['page_title'] = "Recuperacion Contraseña";
+                $data['page_functions_js'] = "functions_login_quiz.js";
+                $this->views->getView($this, "NewPassword", $data);
+            }
+            
+
+          
+        } else {
+            echo "<script> alert('Token Inactivo');  window.location= '" . baseUrl() . "LoginQuiz'
+            </script>";
+        }
+    }
+
 }

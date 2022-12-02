@@ -7,8 +7,7 @@
         </div>
     </div>
     <div class="row justify-content-center">
-        <div class="col-11">
-        
+        <div class="col-11">     
 
             <div class="row" id="charts">
                 <div class="col-12">
@@ -131,62 +130,3 @@
     
     });
 </script>
-<script>
-  // Create the chart total response 
-  Highcharts.chart('date-response', {
-    chart: {
-        type: 'spline',
-        events: {
-      load: function() {
-        var series = this.series;
-        
-        for (let i = 0; i < series.length; i++) {
-        	let newData = []
-          for (let j = 0; j < series[i].data.length; j++) {
-            newData.push({x: new Date(series[i].data[j].name).getTime(), y: series[i].data[j].y});
-          }
-          this.series[i].update({
-            data: newData
-          }, false);
-        }
-        this.redraw();
-      }
-    }
-  
-    },
-   
-   
-    xAxis: {
-    type: 'datetime',
-    dateTimeLabelFormats: { // don't display the dummy year
-      day: '%e. %b',
-      hour: '%H:%M',
-      year: '%Y',
-      millisecond: 'millisecond'
-    },
-    labels: {
-      format: '{value:%Y-%m-%d}'
-    },
-    title: {
-      text: 'Date'
-    }
-  },
-
-        series: [
-            {
-                
-                data: [
-                    <?php foreach($data['date_response'] as $value){
-                        echo "['2022-11-27',2],['2022-11-28',3]";
-                    } ?>
-                ]
-            }
-        ]
-    
-    });
-
-
-
-</script>
-
-   
