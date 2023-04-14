@@ -124,9 +124,15 @@ class ManagementQuestionModel extends Mysql
         return $request;
     }
 
-    public function getAnswer()
+    public function getAnswer($id)
     {
-        $querySelect = "select a.answer,a.idUser ,q.id, q.question, u.userEmail from answer a LEFT join question q on q.id= a.idQuestion left join user u on u.id= a.idUser order by a.idUser ASC, q.id ASC;";
+        $querySelect = "select a.answer,a.idUser ,q.id, q.question, u.userEmail 
+        FROM answer a 
+        LEFT join question q on q.id= a.idQuestion 
+        LEFT join user u on u.id= a.idUser 
+        WHERE q.idQuiz=".$id." 
+        AND  q.active = true
+        order by a.idUser ASC, q.id ASC;";
         $request = $this->selectAll($querySelect);
         return $request;
     }

@@ -17,10 +17,10 @@
                     <table class="table table-hover table-centered table-bordered mb-0" id="assignQuizTable" style="width:100%">
                       <thead>
                         <tr>
-                          <th>Id</th>
-                          <th>Nombre Encuesta</th>
-                          <th>Activa</th>
-                          <th>Acciones</th>
+                          <th style="width: 10%;">Id</th>
+                          <th style="width: 50%;">Nombre Encuesta</th>
+                          <th style="width: 10%;">Activa</th>
+                          <th style="width: 30%;">Acciones</th>
                         </tr>
                       </thead>
                       <tbody>

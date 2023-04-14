@@ -22,6 +22,11 @@ document.addEventListener('DOMContentLoaded', function () {
             swal("Advertencia", "Todos los campos son oblicatorios", "error");
             return false;
         }
+
+        if(!policyPassword(password)){
+            swal("Advertencia", "No cumple las politicas de contraseña segura", "error");
+            return false;
+        }
         postPutExecution('ResolveQuiz/createUser', dataFormRegister, '#addQuizModal', formRegister);
     }
 
@@ -44,9 +49,23 @@ function addQuizModal() {
     $('#registerModal').modal('show');
 }
 
+function policyPassword(password){
+    var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
+    if (regex.test(password)) {
+       return true;
+    }
+    return false;
+}
+
 function addResetModal() {
     $('#resetPasswordModal').modal('show');
 }
+
+$('#registerModal').on('hidden.bs.modal', function (e) {
+    document.querySelector("#userEmail").value='';
+    document.querySelector("#userPassword").value='';
+    document.querySelector("#userPassword2").value='';
+  })
 
 function postPutExecution(url, dataFormALR, modalName, formModal) {
     document.querySelector('#btnRegister').disabled = true;
@@ -106,6 +125,11 @@ $('#formResetPass').submit(function (event) {
 
     if (password == "" || userPassword2 == "") {
         swal("Advertencia", "Todos los campos son oblicatorios", "error");
+        return false;
+    }
+
+    if(!policyPassword(password)){
+        swal("Advertencia", "No cumple las politicas de contraseña segura", "error");
         return false;
     }
 

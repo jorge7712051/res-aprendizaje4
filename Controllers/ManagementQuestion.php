@@ -25,24 +25,27 @@ class ManagementQuestion extends Controllers
     public function viewAnswer()
     {
         if (isset($_SESSION['user'])) {
-            $resultado = $this->model->getAnswer();
+            if(isset($_GET['id'])){
+                $resultado = $this->model->getAnswer($_GET['id']);
         
-            $filename = "answers_".date('Ymd') . ".xls";	
+                $filename = "answers_".date('Ymd') . ".xls";	
           
-            header( "Content-type: application/vnd.ms-excel; charset=utf-8" );
-            header('Content-Transfer-Encoding: binary');
-            header("Content-Disposition: attachment; filename=\"$filename\"");
+                header( "Content-type: application/vnd.ms-excel; charset=utf-8" );
+                header('Content-Transfer-Encoding: binary');
+                header("Content-Disposition: attachment; filename=\"$filename\"");
 
 
-            $mostrar_columnas = false;
+                    $mostrar_columnas = false;
 
-            foreach ($resultado as $libro) {
-                if (!$mostrar_columnas) {
-                    echo implode("\t", array_keys($libro)) . "\n";
-                    $mostrar_columnas = true;
-                }
-                echo utf8_decode(implode("\t", array_values($libro)))  . "\n";
+                    foreach ($resultado as $libro) {
+                    if (!$mostrar_columnas) {
+                        echo implode("\t", array_keys($libro)) . "\n";
+                        $mostrar_columnas = true;
+                    }
+                    echo utf8_decode(implode("\t", array_values($libro)))  . "\n";
             }
+            }
+            
         } else {
             echo "<script>window.location.href='" . baseUrl() . "Login'</script>";
         }

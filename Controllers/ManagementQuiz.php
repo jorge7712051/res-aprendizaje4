@@ -32,8 +32,15 @@ session_start();
         public function getQuizResult(){
             $arrData = $this->model->searchQuizResult();
             for($i=0; $i<count($arrData); $i++){
-                $arrData[$i]['acciones'] = '<div class="text-center">
-                <button class="btn btn-outline-secondary btn-sm" id="btnEditLR" onclick="editQuizModal(this)" title="Editar" alr="'.$arrData[$i]['id'].'"><i class="fas fa-pencil-alt"></i></button>
+                $arrData[$i]['acciones'] = '<div class="row">
+                <div class="col-2">
+                    <button class="btn btn-outline-secondary btn-sm" id="btnEditLR" onclick="editQuizModal(this)" title="Editar" alr="'.$arrData[$i]['id'].'"><i class="fas fa-pencil-alt"></i></button> 
+                </div>
+                <div class="col-10">
+                    <form name="EALR" id="EALR" action="'.baseUrl().'ManagementQuestion/viewAnswer/?id='.$arrData[$i]['id'].'" method="post">
+                        <button class="btn btn-danger btn-sm" id="btnEditLR" title="Editar" alr="'.$arrData[$i]['id'].'" type="submit"><i class="bi bi-cloud-arrow-down"></i> Descarga de respuestas</button>
+                    </form>
+                </div>       
                 </div>';
             };
             echo json_encode($arrData, JSON_UNESCAPED_UNICODE);

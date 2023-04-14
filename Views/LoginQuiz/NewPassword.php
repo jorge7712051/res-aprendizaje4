@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <!-- Main CSS-->
     <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/style.css">
-    
-      <script src="https://www.google.com/recaptcha/api.js?render=6LfITyAjAAAAAIhE6Leitd7I_jwQ3H6Q-GCf4S9l"></script>
+
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfITyAjAAAAAIhE6Leitd7I_jwQ3H6Q-GCf4S9l"></script>
     <title><?= $data['page_tag']; ?></title>
 </head>
 
@@ -28,26 +28,39 @@
                             <div class="col-lg-6 col-sm-12">
                                 <div class="card-body p-md-5 mx-md-4">
                                     <form name="formResetPass" class="p-2 shadow" id="formResetPass" action="<?= baseUrl() ?>ResolveQuiz/ChangePasword" method="post">
-                                    <br>
+                                        <br>
                                         <div class="form-outline">
-                                            
-                                            <input type="password" id="newpassword" name="newpassword" class="form-control" placeholder="Nueva contraseña" autocomplete="off" required/>
+
+                                            <input type="password" id="newpassword" name="newpassword" class="form-control" placeholder="Nueva contraseña" autocomplete="off" required />
                                             <br>
                                         </div>
 
                                         <div class="form-outline">
-                                            <input type="password" id="repetpassword" name="repetpassword" class="form-control" placeholder="Confirmacion de contraseña" required/>
+                                            <input type="password" id="repetpassword" name="repetpassword" class="form-control" placeholder="Confirmacion de contraseña" required />
                                             <br>
                                         </div>
 
                                         <div class="text-center pt-1  pb-1">
                                             <button class="btn btn-block gradient-custom-2 mb-3" type="submit" id="ButtonLogin">Cambiar Contraseña</button>
-                                           
+
+                                        </div>
+                                        <div class="alert alert-danger" role="alert">
+                                            <h6 class="alert-heading">Tenga en cuenta que la contraseña debe tener:</h6>
+                                            <ul>
+                                                <li>Minimo 8 caracteres</li>
+                                                <li>Maximo 15</li>
+                                                <li>Al menos una letra mayúscula</li>
+                                                <li>Al menos una letra minucula</li>
+                                                <li>Al menos un dígito</li>
+                                                <li>No espacios en blanco</li>
+                                                <li>Al menos 1 caracter especial</li>
+                                            </ul>
+
                                         </div>
                                     </form>
-                                  
+
                                 </div>
-                            
+
                             </div>
                             <div class="col-lg-6 col-sm-12 d-flex align-items-center gradient-custom-2">
                                 <div class="px-3 py-4 p-md-5 mx-md-4 " style="text-align: justify;">

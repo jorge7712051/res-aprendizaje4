@@ -183,6 +183,10 @@ class LoginQuiz extends Controllers
                 $data['page_functions_js'] = "functions_login_quiz.js";
                 $this->views->getView($this, "NewPassword", $data);
             }
+            else{
+                echo "<script> alert('Token Inactivo');  window.location= '" . baseUrl() . "LoginQuiz'
+                </script>";
+            }
             
 
           
